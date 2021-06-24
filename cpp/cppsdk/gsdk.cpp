@@ -13,7 +13,7 @@ namespace Microsoft
         {
             constexpr int c_minHeartbeatIntervalMs = 1000;
             std::unique_ptr<GSDKInternal> GSDKInternal::m_instance = nullptr;
-            std::mutex GSDKInternal::m_gsdkInitMutex;
+            std::recursive_mutex GSDKInternal::m_gsdkInitMutex;
             volatile long long GSDKInternal::m_exitStatus = 0;
             std::mutex GSDKInternal::m_logLock;
             std::ofstream GSDKInternal::m_logFile;
@@ -233,6 +233,13 @@ namespace Microsoft
                 try
                 {
                     std::istringstream iss(dateStr);
+                    
+                    /*
+                    char bigBuff[2048];
+                    struct tm timeObj;
+                    strptime(bigBuff, "%Y-%m-%dT%T", &timeObj);
+                    iss >> bigBuff;
+                    */
                     iss >> std::get_time(&ret, "%Y-%m-%dT%T");
                     failed = iss.fail();
                 }
@@ -425,7 +432,8 @@ namespace Microsoft
 
             Microsoft::Azure::Gaming::GSDKInternal& GSDKInternal::get()
             {
-                std::unique_lock<std::mutex> lock(m_gsdkInitMutex);
+                // Skip this mutex completely since it causes a pthread assert on Linux containers
+                //std::unique_lock<std::recursive_mutex> lock(m_gsdkInitMutex);
 
                 if (!m_instance)
                 {

@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <memory>
 #include <list>
 #include <unordered_map>
 #include <map>
@@ -18,9 +19,15 @@
 #include <sstream>
 
 #include <thread>
+#include <iomanip>
+
 
 #ifdef GSDK_LINUX
 #include "gsdkLinuxPch.h"
+
+#include <time.h>
+
+
 #else
 #endif
 

@@ -177,7 +177,7 @@ namespace Microsoft
                 std::vector<std::string> m_initialPlayers;
 
                 static std::unique_ptr<GSDKInternal> m_instance;
-                static std::mutex m_gsdkInitMutex;
+                static std::recursive_mutex m_gsdkInitMutex;
 
                 static volatile long long m_exitStatus;
                 static std::mutex m_logLock;
