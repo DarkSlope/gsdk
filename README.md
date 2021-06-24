@@ -1,7 +1,8 @@
 # DarkSlope Notes: Cross-compiling for Linux
 
 It is possible to cross-compile this from Windows for Linux via the UE4 Clang toolchain and CMake with Ninja target.  Make sure Ninja is installed, use the Ninja target in CMake and set the toolchain file to use the PhysX Linux cross compile CMake toolchain file from UE4: Engine/Source/ThirdParty/PhysX3/Externals/CMakeModules/linux/LinuxCrossToolchain.x86_64-unknown-linux-gnu.cmake
-Also currently you will have to edit the hardcoded path in CMakeLists.txt for the Clang C++ stdlib headers from UE4 
+
+Currently you will also have to edit the hardcoded path in CMakeLists.txt for the Clang C++ stdlib headers from UE4 
 
     target_include_directories(GSDK_CPP PRIVATE <YOUR_UE4_ROOT>/Engine/Source/ThirdParty/Linux/LibCxx/include/c++/v1)
 
